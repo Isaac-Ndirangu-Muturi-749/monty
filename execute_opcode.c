@@ -1,4 +1,4 @@
-#include "main.h"
+#include "monty.h"
 
 /**
  * execute_opcode - Execute Monty opcode based on the parsed line.
