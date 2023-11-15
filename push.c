@@ -8,30 +8,34 @@
  */
 void push(stack_t **stack, unsigned int line_number, char *data)
 {
-    /* Check if there is an argument after push */
-    if (!data || !isdigit(*data))
-    {
-        fprintf(stderr, "L%u: usage: push integer\n", line_number);
-        exit(EXIT_FAILURE);
-    }
+	int value;
+	stack_t *new_node;
 
-    /* Convert the argument to an integer using atoi */
-    int value = atoi(data);
+	/* Check if there is an argument after push */
+	if (!data || !isdigit(*data))
+	{
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
 
-    /* Create a new stack element */
-    stack_t *new_node = malloc(sizeof(stack_t));
-    if (!new_node)
-    {
-        fprintf(stderr, "Error: malloc failed\n");
-        exit(EXIT_FAILURE);
-    }
+	/* Convert the argument to an integer using atoi */
+	value = atoi(data);
 
-    new_node->n = value;
-    new_node->prev = NULL;
-    new_node->next = *stack;
+	/* Create a new stack element */
+	new_node = malloc(sizeof(stack_t));
 
-    if (*stack)
-        (*stack)->prev = new_node;
+	if (!new_node)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
 
-    *stack = new_node;
+	new_node->n = value;
+	new_node->prev = NULL;
+	new_node->next = *stack;
+
+	if (*stack)
+		(*stack)->prev = new_node;
+
+	*stack = new_node;
 }

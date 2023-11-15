@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include "main.h"
 
 /**
@@ -9,64 +11,74 @@
  */
 int main(int argc, char *argv[])
 {
-    // Check if the correct number of arguments is provided
-    if (argc != 2)
-    {
-        fprintf(stderr, "USAGE: monty file\n");
-        return EXIT_FAILURE;
-    }
+	FILE *file;
 
-    // Open the Monty bytecode file
-    FILE *file = fopen(argv[1], "r");
-    if (!file)
-    {
-        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-        return EXIT_FAILURE;
-    }
+	/* Check if the correct number of arguments is provided */
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		return (EXIT_FAILURE);
+	}
 
-    // Initialize the stack
-    stack_t *stack = NULL;
+	/* Open the Monty bytecode file */
+	file = fopen(argv[1], "r");
+	if (!file)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		return (EXIT_FAILURE);
+	}
 
-    // Buffer to read lines from the file
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-    unsigned int line_number = 1;
+	/* Process the Monty bytecode file */
+	process_file(file);
 
-    while ((read = getline(&line, &len, file)) != -1)
-    {
-        if (line != NULL)
-        {
-            char *opcode = strtok(line, DELIMITERS);
-            char *data = strtok(NULL, DELIMITERS);
+	/* Close the file */
+	fclose(file);
 
-            if (!strcmp(opcode, "push"))
-            {
-                push(&stack, line_number, data);
-            }
-            else
-            {
-                // Check the opcode and call the corresponding function
-                execute_opcode(opcode, &stack, line_number);
-            }
-        }
-        line_number++;
-    }
+	return (EXIT_SUCCESS);
+}
 
-    // Free allocated memory
-    if (line)
-        free(line);
+/**
+ * process_file - Process the Monty bytecode file.
+ * @file: Pointer to the opened Monty bytecode file.
+ */
+void process_file(FILE *file)
+{
+	char *line = NULL;
+	size_t len = 0;
+	unsigned int line_number = 1;
+	stack_t *stack = NULL;
 
-    // Close the file
-    fclose(file);
+	/* Read each line from the file */
+	while ((getline(&line, &len, file)) != -1)
+	{
+		if (line != NULL)
+		{
+			/* Tokenize the line to get opcode and data */
+			char *opcode = strtok(line, DELIMITERS);
+			char *data = strtok(NULL, DELIMITERS);
 
-    // Clean up the stack
-    while (stack != NULL)
-    {
-        stack_t *temp = stack;
-        stack = stack->next;
-        free(temp);
-    }
+			/* Check opcode and execute corresponding function */
+			if (!strcmp(opcode, "push"))
+			{
+				push(&stack, line_number, data);
+			} else
+			{
+				execute_opcode(opcode, &stack, line_number);
+			}
+		}
+		line_number++;
+	}
 
-    return EXIT_SUCCESS;
+	/* Free allocated memory */
+	if (line)
+		free(line);
+
+	/* Clean up the stack */
+	while (stack != NULL)
+	{
+		stack_t *temp = stack;
+
+		stack = stack->next;
+		free(temp);
+	}
 }

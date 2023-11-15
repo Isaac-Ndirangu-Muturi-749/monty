@@ -8,25 +8,27 @@
  */
 void execute_opcode(const char *opcode, stack_t **stack, unsigned int line_number)
 {
-    instruction_t op_funcs[] = {
-        {"pall", pall},
-        {NULL, NULL}
-    };
+	int i;
 
-    for (int i = 0; op_funcs[i].opcode; i++)
-    {
-        if (strcmp(opcode, op_funcs[i].opcode) == 0)
-        {
-            if (op_funcs[i].f == NULL)
-            {
-                fprintf(stderr, "L%u: Function %s not implemented\n", line_number, opcode);
-                exit(EXIT_FAILURE);
-            }
-            op_funcs[i].f(stack, line_number);
-            return;
-        }
-    }
+	instruction_t op_funcs[] = {
+		{"pall", pall},
+		{NULL, NULL}
+	};
 
-    fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-    exit(EXIT_FAILURE);
+	for (i = 0; op_funcs[i].opcode; i++)
+	{
+		if (strcmp(opcode, op_funcs[i].opcode) == 0)
+		{
+			if (op_funcs[i].f == NULL)
+			{
+				fprintf(stderr, "L%u: Function %s not implemented\n", line_number, opcode);
+				exit(EXIT_FAILURE);
+			}
+			op_funcs[i].f(stack, line_number);
+			return;
+		}
+	}
+
+	fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+	exit(EXIT_FAILURE);
 }

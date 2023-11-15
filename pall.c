@@ -8,15 +8,15 @@
  */
 void pall(stack_t **stack, unsigned int __attribute__((unused)) line_number)
 {
-    stack_t *current = *stack;
+	stack_t *current = *stack;
 
-    if (current == NULL)
+	if (current == NULL)
 		return;
 
-    /* Print all values on the stack */
-    while (current)
-    {
-        printf("%d\n", current->n);
-        current = current->next;
-    }
+	/* Print all values on the stack */
+	while (current)
+	{
+		printf("%d\n", current->n);
+		current = current->next;
+	}
 }
