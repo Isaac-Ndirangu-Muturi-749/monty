@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "monty.h": "c",
+        "main.h": "c"
+    }
+}
