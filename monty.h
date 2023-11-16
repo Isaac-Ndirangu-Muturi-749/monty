@@ -46,7 +46,7 @@ extern stack_t *stack;
 int main(int argc, char *argv[]);
 void process_file(FILE *file);
 
-void execute_opcode(const char *opcode, stack_t **stack, unsigned int line_number);
+void exec_opcode(const char *opcode, stack_t **stack, unsigned int line_number);
 
 void push(stack_t **stack, unsigned int line_number, char *data);
 void pall(stack_t **stack, unsigned int __attribute__((unused)) line_number);

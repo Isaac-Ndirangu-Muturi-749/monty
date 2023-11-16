@@ -1,12 +1,12 @@
 #include "monty.h"
 
 /**
- * execute_opcode - Execute Monty opcode based on the parsed line.
+ * exec_opcode - Execute Monty opcode based on the parsed line.
  * @opcode: The opcode to execute.
  * @stack: Double pointer to the head of the stack.
  * @line_number: Line number in the Monty bytecode file.
  */
-void execute_opcode(const char *opcode, stack_t **stack, unsigned int line_number)
+void exec_opcode(const char *opcode, stack_t **stack, unsigned int line_number)
 {
 	int i;
 
