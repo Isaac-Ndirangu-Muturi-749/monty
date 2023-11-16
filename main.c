@@ -63,7 +63,7 @@ void process_file(FILE *file)
 				push(&stack, line_number, data);
 			} else
 			{
-				execute_opcode(opcode, &stack, line_number);
+				exec_opcode(opcode, &stack, line_number);
 			}
 		}
 		line_number++;
