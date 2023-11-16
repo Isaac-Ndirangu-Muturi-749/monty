@@ -8,33 +8,28 @@
  */
 void exec_opcode(const char *opcode, stack_t **stack, unsigned int line_number)
 {
-	int i;
+    int i;
 
-	instruction_t op_funcs[] = {
-		{"push", push},
-		{"pall", pall},
-		{"pint", pint},
-		{"pop", pop},
-		{"swap", swap},
-		{"add", add},
-		{"nop", nop},
-		{NULL, NULL}
-	};
+    instruction_t op_funcs[] = {
+        {"push", push},
+        {"pall", pall},
+        {"pint", pint},
+        {"pop", pop},
+        {"swap", swap},
+        {"add", add},
+        {"nop", nop},
+        {NULL, NULL}
+    };
 
-	for (i = 0; op_funcs[i].opcode; i++)
-	{
-		if (strcmp(opcode, op_funcs[i].opcode) == 0)
-		{
-			if (op_funcs[i].f == NULL)
-			{
-				fprintf(stderr, "L%u: Function %s not implemented\n", line_number, opcode);
-				exit(EXIT_FAILURE);
-			}
-			op_funcs[i].f(stack, line_number);
-			return;
-		}
-	}
+    for (i = 0; op_funcs[i].opcode; i++)
+    {
+        if (strcmp(opcode, op_funcs[i].opcode) == 0)
+        {
+            op_funcs[i].f(stack, line_number);
+            return;
+        }
+    }
 
-	fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-	exit(EXIT_FAILURE);
+    fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+    exit(EXIT_FAILURE);
 }

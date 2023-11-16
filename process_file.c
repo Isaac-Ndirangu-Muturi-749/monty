@@ -20,7 +20,7 @@ void process_file(FILE *file, stack_t **stack)
 			/* Tokenize the line to get opcode*/
 			char *opcode = strtok(line, DELIMITERS);
 
-			/* Execute opcode and check for errors */
+			/* Execute opcode */
 			exec_opcode(opcode, stack, line_number);
 		}
 		line_number++;
