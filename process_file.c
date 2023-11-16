@@ -11,18 +11,24 @@ void process_file(FILE *file, stack_t **stack)
 	char *line = NULL;
 	size_t len = 0;
 	unsigned int line_number = 1;
+	char *opcode;
 
 	/* Read each line from the file */
 	while ((getline(&line, &len, file)) != -1)
 	{
-		if (line != NULL)
+		/* Skip empty lines or lines with only whitespace */
+		if (strspn(line, " \t\r\n") == strlen(line))
 		{
-			/* Tokenize the line to get opcode*/
-			char *opcode = strtok(line, DELIMITERS);
-
-			/* Execute opcode */
-			exec_opcode(opcode, stack, line_number);
+			line_number++;
+			continue;
 		}
+
+		/* Tokenize the line to get opcode*/
+		opcode = strtok(line, DELIMITERS);
+
+		/* Execute opcode */
+		exec_opcode(opcode, stack, line_number);
+
 		line_number++;
 	}
 
@@ -30,3 +36,4 @@ void process_file(FILE *file, stack_t **stack)
 	if (line)
 		free(line);
 }
+

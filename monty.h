@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <fcntl.h>
 
-#define DELIMITERS " \n\t\a\b\r"
+#define DELIMITERS "\n \t"
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
