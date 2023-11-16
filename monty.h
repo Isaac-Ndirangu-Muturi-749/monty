@@ -44,11 +44,13 @@ typedef struct instruction_s
 extern stack_t *stack;
 
 int main(int argc, char *argv[]);
-void process_file(FILE *file);
+void process_file(FILE *file, stack_t **stack);
 
 void exec_opcode(const char *opcode, stack_t **stack, unsigned int line_number);
 
-void push(stack_t **stack, unsigned int line_number, char *data);
+void cleanup_stack(stack_t **stack);
+
+void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int __attribute__((unused)) line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);

@@ -12,6 +12,7 @@
 int main(int argc, char *argv[])
 {
 	FILE *file;
+	stack_t *stack = NULL;
 
 	/* Check if the correct number of arguments is provided */
 	if (argc != 2)
@@ -29,56 +30,13 @@ int main(int argc, char *argv[])
 	}
 
 	/* Process the Monty bytecode file */
-	process_file(file);
+	process_file(file, &stack);
+
+	/* Clean up the stack */
+	cleanup_stack(&stack);
 
 	/* Close the file */
 	fclose(file);
 
 	return (EXIT_SUCCESS);
-}
-
-/**
- * process_file - Process the Monty bytecode file.
- * @file: Pointer to the opened Monty bytecode file.
- */
-void process_file(FILE *file)
-{
-	char *line = NULL;
-	size_t len = 0;
-	unsigned int line_number = 1;
-	stack_t *stack = NULL;
-
-	/* Read each line from the file */
-	while ((getline(&line, &len, file)) != -1)
-	{
-		if (line != NULL)
-		{
-			/* Tokenize the line to get opcode and data */
-			char *opcode = strtok(line, DELIMITERS);
-			char *data = strtok(NULL, DELIMITERS);
-
-			/* Check opcode and execute corresponding function */
-			if (!strcmp(opcode, "push"))
-			{
-				push(&stack, line_number, data);
-			} else
-			{
-				exec_opcode(opcode, &stack, line_number);
-			}
-		}
-		line_number++;
-	}
-
-	/* Free allocated memory */
-	if (line)
-		free(line);
-
-	/* Clean up the stack */
-	while (stack != NULL)
-	{
-		stack_t *temp = stack;
-
-		stack = stack->next;
-		free(temp);
-	}
 }

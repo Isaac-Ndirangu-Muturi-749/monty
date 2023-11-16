@@ -11,6 +11,7 @@ void exec_opcode(const char *opcode, stack_t **stack, unsigned int line_number)
 	int i;
 
 	instruction_t op_funcs[] = {
+		{"push", push},
 		{"pall", pall},
 		{"pint", pint},
 		{"pop", pop},

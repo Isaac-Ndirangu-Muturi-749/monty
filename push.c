@@ -4,13 +4,13 @@
  * push - Pushes an element to the stack.
  * @stack: Double pointer to the head of the stack.
  * @line_number: Line number in the Monty bytecode file.
- * @data: Argument passed to push.
  */
-void push(stack_t **stack, unsigned int line_number, char *data)
+void push(stack_t **stack, unsigned int line_number)
 {
 	int value, i;
 	stack_t *new_node;
 
+	char *data = strtok(NULL, DELIMITERS);
 	/* Check if there is an argument after push */
 	if (!data)
 	{
@@ -29,8 +29,7 @@ void push(stack_t **stack, unsigned int line_number, char *data)
 		}
 	}
 
-	/* Convert the argument to an integer using atoi */
-	value = atoi(data);
+	value = atoi(data);/* Convert the argument to an integer using atoi */
 
 	/* Create a new stack element */
 	new_node = malloc(sizeof(stack_t));
