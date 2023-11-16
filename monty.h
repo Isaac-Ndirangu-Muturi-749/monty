@@ -50,5 +50,6 @@ void execute_opcode(const char *opcode, stack_t **stack, unsigned int line_numbe
 
 void push(stack_t **stack, unsigned int line_number, char *data);
 void pall(stack_t **stack, unsigned int __attribute__((unused)) line_number);
+void pint(stack_t **stack, unsigned int line_number);
 
 #endif /* MAIN_H */
